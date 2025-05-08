@@ -7,5 +7,7 @@
       "source.fixAll.ruff": "explicit",
       "source.organizeImports.ruff": "explicit"
     }
-  }
+  },
+  "files.autoSave": "afterDelay",
+  "python.terminal.activateEnvInCurrentTerminal": false
 }
