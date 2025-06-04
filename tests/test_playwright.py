@@ -6,7 +6,7 @@ load_dotenv()
 
 def test_connect_browser():
     import os
-    from patchright.sync_api import sync_playwright
+    from playwright.sync_api import sync_playwright
 
     chrome_exe = os.getenv("CHROME_PATH", "")
     chrome_use_data = os.getenv("CHROME_USER_DATA", "")

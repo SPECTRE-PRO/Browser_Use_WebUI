@@ -67,24 +67,23 @@ WORKDIR /app
 
 # Copy requirements and install Python dependencies
 COPY requirements.txt .
-# Ensure 'patchright' is in your requirements.txt or install it directly
-# RUN pip install --no-cache-dir -r requirements.txt patchright # If not in requirements
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Patchright browsers and dependencies
-# Patchright documentation suggests PLAYWRIGHT_BROWSERS_PATH is still relevant
-# or that Patchright installs to a similar default location that Playwright would.
-# Let's assume Patchright respects PLAYWRIGHT_BROWSERS_PATH or its default install location is findable.
+# Install playwright browsers and dependencies
+# playwright documentation suggests PLAYWRIGHT_BROWSERS_PATH is still relevant
+# or that playwright installs to a similar default location that Playwright would.
+# Let's assume playwright respects PLAYWRIGHT_BROWSERS_PATH or its default install location is findable.
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-browsers
 RUN mkdir -p $PLAYWRIGHT_BROWSERS_PATH
 
 # Install recommended: Google Chrome (instead of just Chromium for better undetectability)
-# The 'patchright install chrome' command might download and place it.
-# The '--with-deps' equivalent for patchright install is to run 'patchright install-deps chrome' after.
-# RUN patchright install chrome --with-deps
+# The 'playwright install chrome' command might download and place it.
+# The '--with-deps' equivalent for playwright install is to run 'playwright install-deps chrome' after.
+# RUN playwright install chrome --with-deps
 
 # Alternative: Install Chromium if Google Chrome is problematic in certain environments
-RUN patchright install chromium --with-deps
+RUN playwright install chromium --with-deps
 
 
 # Copy the application code

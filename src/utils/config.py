@@ -7,7 +7,8 @@ PROVIDER_DISPLAY_NAMES = {
     "alibaba": "Alibaba",
     "moonshot": "MoonShot",
     "unbound": "Unbound AI",
-    "ibm": "IBM"
+    "ibm": "IBM",
+    "grok": "Grok",
 }
 
 # Predefined model names for common providers
@@ -25,6 +26,15 @@ model_names = {
     "alibaba": ["qwen-plus", "qwen-max", "qwen-vl-max", "qwen-vl-plus", "qwen-turbo", "qwen-long"],
     "moonshot": ["moonshot-v1-32k-vision-preview", "moonshot-v1-8k-vision-preview"],
     "unbound": ["gemini-2.0-flash", "gpt-4o-mini", "gpt-4o", "gpt-4.5-preview"],
+    "grok": [
+        "grok-3",
+        "grok-3-fast",
+        "grok-3-mini",
+        "grok-3-mini-fast",
+        "grok-2-vision",
+        "grok-2-image",
+        "grok-2",
+    ],
     "siliconflow": [
         "deepseek-ai/DeepSeek-R1",
         "deepseek-ai/DeepSeek-V3",
@@ -59,5 +69,32 @@ model_names = {
         "Pro/THUDM/glm-4-9b-chat",
     ],
     "ibm": ["ibm/granite-vision-3.1-2b-preview", "meta-llama/llama-4-maverick-17b-128e-instruct-fp8",
-            "meta-llama/llama-3-2-90b-vision-instruct"]
+            "meta-llama/llama-3-2-90b-vision-instruct"],
+    "modelscope":[
+        "Qwen/Qwen2.5-Coder-32B-Instruct",
+        "Qwen/Qwen2.5-Coder-14B-Instruct",
+        "Qwen/Qwen2.5-Coder-7B-Instruct",
+        "Qwen/Qwen2.5-72B-Instruct",
+        "Qwen/Qwen2.5-32B-Instruct",
+        "Qwen/Qwen2.5-14B-Instruct",
+        "Qwen/Qwen2.5-7B-Instruct",
+        "Qwen/QwQ-32B-Preview",
+        "Qwen/Qwen2.5-VL-3B-Instruct",
+        "Qwen/Qwen2.5-VL-7B-Instruct",
+        "Qwen/Qwen2.5-VL-32B-Instruct",
+        "Qwen/Qwen2.5-VL-72B-Instruct",
+        "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B",
+        "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
+        "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+        "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+        "deepseek-ai/DeepSeek-R1",
+        "deepseek-ai/DeepSeek-V3",
+        "Qwen/Qwen3-1.7B",
+        "Qwen/Qwen3-4B",
+        "Qwen/Qwen3-8B",
+        "Qwen/Qwen3-14B",
+        "Qwen/Qwen3-30B-A3B",
+        "Qwen/Qwen3-32B",
+        "Qwen/Qwen3-235B-A22B",
+    ],
 }

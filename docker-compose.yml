@@ -54,7 +54,7 @@ services:
 
       # Display Settings
       - DISPLAY=:99
-      # This ENV is used by the Dockerfile during build time if Patchright respects it.
+      # This ENV is used by the Dockerfile during build time if playwright respects it.
       # It's not strictly needed at runtime by docker-compose unless your app or scripts also read it.
       - PLAYWRIGHT_BROWSERS_PATH=/ms-browsers # Matches Dockerfile ENV
       - RESOLUTION=${RESOLUTION:-1920x1080x24}

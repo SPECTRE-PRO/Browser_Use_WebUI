@@ -1,17 +1,17 @@
 import asyncio
 import pdb
 
-from patchright.async_api import Browser as PlaywrightBrowser
-from patchright.async_api import (
+from playwright.async_api import Browser as PlaywrightBrowser
+from playwright.async_api import (
     BrowserContext as PlaywrightBrowserContext,
 )
-from patchright.async_api import (
+from playwright.async_api import (
     Playwright,
     async_playwright,
 )
 from browser_use.browser.browser import Browser, IN_DOCKER
 from browser_use.browser.context import BrowserContext, BrowserContextConfig
-from patchright.async_api import BrowserContext as PlaywrightBrowserContext
+from playwright.async_api import BrowserContext as PlaywrightBrowserContext
 import logging
 
 from browser_use.browser.chrome import (
@@ -48,9 +48,13 @@ class CustomBrowser(Browser):
         if (
                 not self.config.headless
                 and hasattr(self.config, 'new_context_config')
-                and hasattr(self.config.new_context_config, 'browser_window_size')
+                and hasattr(self.config.new_context_config, 'window_width')
+                and hasattr(self.config.new_context_config, 'window_height')
         ):
-            screen_size = self.config.new_context_config.browser_window_size.model_dump()
+            screen_size = {
+                'width': self.config.new_context_config.window_width,
+                'height': self.config.new_context_config.window_height,
+            }
             offset_x, offset_y = get_window_adjustments()
         elif self.config.headless:
             screen_size = {'width': 1920, 'height': 1080}
@@ -67,17 +71,12 @@ class CustomBrowser(Browser):
             *(CHROME_DISABLE_SECURITY_ARGS if self.config.disable_security else []),
             *(CHROME_DETERMINISTIC_RENDERING_ARGS if self.config.deterministic_rendering else []),
             f'--window-position={offset_x},{offset_y}',
+            f'--window-size={screen_size["width"]},{screen_size["height"]}',
             *self.config.extra_browser_args,
         }
-        contain_window_size = False
-        for arg in self.config.extra_browser_args:
-            if "--window-size" in arg:
-                contain_window_size = True
-                break
-        if not contain_window_size:
-            chrome_args.add(f'--window-size={screen_size["width"]},{screen_size["height"]}')
 
-        # check if port 9222 is already taken, if so remove the remote-debugging-port arg to prevent conflicts
+        # check if chrome remote debugging port is already taken,
+        # if so remove the remote-debugging-port arg to prevent conflicts
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if s.connect_ex(('localhost', self.config.chrome_remote_debugging_port)) == 0:
                 chrome_args.remove(f'--remote-debugging-port={self.config.chrome_remote_debugging_port}')
@@ -100,6 +99,7 @@ class CustomBrowser(Browser):
         }
 
         browser = await browser_class.launch(
+            channel='chromium',  # https://github.com/microsoft/playwright/issues/33566
             headless=self.config.headless,
             args=args[self.config.browser_class],
             proxy=self.config.proxy.model_dump() if self.config.proxy else None,

@@ -29,20 +29,18 @@ async def test_browser_use_agent():
     from src.utils import llm_provider
     from src.agent.browser_use.browser_use_agent import BrowserUseAgent
 
-    # llm = utils.get_llm_model(
-    #     provider="openai",
-    #     model_name="gpt-4o",
-    #     temperature=0.8,
-    #     base_url=os.getenv("OPENAI_ENDPOINT", ""),
-    #     api_key=os.getenv("OPENAI_API_KEY", ""),
-    # )
-
     llm = llm_provider.get_llm_model(
-        provider="google",
-        model_name="gemini-2.0-flash",
-        temperature=0.6,
-        api_key=os.getenv("GOOGLE_API_KEY", "")
+        provider="openai",
+        model_name="gpt-4o",
+        temperature=0.8,
     )
+
+    # llm = llm_provider.get_llm_model(
+    #     provider="google",
+    #     model_name="gemini-2.0-flash",
+    #     temperature=0.6,
+    #     api_key=os.getenv("GOOGLE_API_KEY", "")
+    # )
 
     # llm = utils.get_llm_model(
     #     provider="deepseek",
@@ -104,7 +102,7 @@ async def test_browser_use_agent():
     browser_context = None
 
     try:
-        extra_browser_args = [f"--window-size={window_w},{window_h}"]
+        extra_browser_args = []
         if use_own_browser:
             browser_binary_path = os.getenv("BROWSER_PATH", None)
             if browser_binary_path == "":
@@ -119,6 +117,10 @@ async def test_browser_use_agent():
                 headless=False,
                 browser_binary_path=browser_binary_path,
                 extra_browser_args=extra_browser_args,
+                new_context_config=BrowserContextConfig(
+                    window_width=window_w,
+                    window_height=window_h,
+                )
             )
         )
         browser_context = await browser.new_context(
@@ -256,7 +258,7 @@ async def test_browser_use_parallel():
     browser_context = None
 
     try:
-        extra_browser_args = [f"--window-size={window_w},{window_h}"]
+        extra_browser_args = []
         if use_own_browser:
             browser_binary_path = os.getenv("BROWSER_PATH", None)
             if browser_binary_path == "":
@@ -271,6 +273,10 @@ async def test_browser_use_parallel():
                 headless=False,
                 browser_binary_path=browser_binary_path,
                 extra_browser_args=extra_browser_args,
+                new_context_config=BrowserContextConfig(
+                    window_width=window_w,
+                    window_height=window_h,
+                )
             )
         )
         browser_context = await browser.new_context(
